@@ -1,28 +1,59 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <NavBar></NavBar>
+    <Login v-if="visibleLogin" v-on:login-sucess="$loginSucess"></Login>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import ShowProject from './components/ShowProjects.vue';
+import NavBar from './components/NavBar.vue';
+import Login from './components/Login.vue';
+import setting from './components/api/setting.js';
 
-export default {
+import api from './components/api/requestApi.js';
+
+
+export default  {
+  data: function(){
+    return {
+      visibleLogin: false,
+      showProject: false,
+      projects: [
+      ]
+    }
+  },
+  methods: {
+    $loginSucess: function(info) { // can delete in the future
+      let _userId = info.userId
+      let _token = info.id
+      this.userId = _userId
+      this.userToken = _token
+    },
+
+    $check_login: async function() {
+      let _userId = api.getCookie('user_id');
+      let _url = `${setting.baseApiUrl}/api/staffs/${_userId}`;
+      await api.sendRequest(_url)
+        .then(res => {
+          if(!res.status === 200 && res.statusText === "OK") {
+            this.visibleLogin = true
+          }
+        })
+    },
+
+  },
+  components: {NavBar,Login, ShowProject},
   name: 'app',
-  components: {
-    HelloWorld
+  mounted(){
+    this.$check_login();
   }
 }
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  height:100%
 }
 </style>

@@ -8,7 +8,12 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "vue": "^2.5.17"
+    "element-ui": "^2.4.9",
+    "eslint-plugin-html": "^5.0.0",
+    "js-sha256": "^0.9.0",
+    "postcss-salad": "^2.0.1",
+    "vue": "^2.5.17",
+    "vue-router": "^3.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.1.1",
