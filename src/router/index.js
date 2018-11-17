@@ -101,8 +101,8 @@ const router = new VueRouter ({
   router.beforeEach( async (to, from, next) => {
     const currentUser = await api.verifyLogin();
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-    // console.log('currentUser', currentUser);
-    // console.log('required', requiresAuth);
+    console.log('currentUser', currentUser);
+    console.log('required', requiresAuth);
     if (requiresAuth && !currentUser) {
       const loginpath = window.location.pathname;
       next({ name: 'login', query: { from: loginpath } });

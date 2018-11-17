@@ -21,6 +21,7 @@
 </template>
 <script>
 import api from './api/requestApi.js'
+import setting from './api/setting.js'
 
 export default {
     data: function() {
@@ -44,8 +45,8 @@ export default {
                 return;
             }
 
-            //send request
-            api.postData(`http://localhost:3000/api/staffs/login`, {email: _user.email, password: _user.password})
+            
+            api.postData(`${setting.baseApiUrl}/api/staffs/login`, {email: _user.email, password: _user.password})
                 .then(data => {
                     let _id = data.id;
                     let _userId = data.userId;
@@ -58,6 +59,7 @@ export default {
                             });
                         return;
                     }
+                    
                     // request is sucess, so emit login-sucess event
                     this.$router.replace(this.$route.query.from);
                     // this.$emit('login-sucess',{id: _id, userId: _userId});

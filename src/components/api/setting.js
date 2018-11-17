@@ -1,7 +1,7 @@
 'use strict';
 
 export default {
-    baseApiUrl : 'http://localhost:3000',
+    baseApiUrl : 'https://hidden-island-92237.herokuapp.com',
     urlgetProject: '/api/projects',
     urlCreateContainer: '/api/attachments',
 
