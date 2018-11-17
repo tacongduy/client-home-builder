@@ -29,28 +29,29 @@ export default {
   },
   components: { SurveyCard, AddForm },
   methods: {
-    //get user name of user id
-    $modifyData: function(record) {
-      let _idUser = record.byWhom;
-      let _url = `${setting.baseApiUrl}${setting.urlGetUser}/${_idUser}`;
-      console.log(_url);
-      // get infomation about user who have _idUser
-      api.sendRequest(_url) 
-        .then( res=> {
-          record['name'] = res.username ;
-        })
-    },
+    // $modifyData: async function(res) {
+      
+    //   console.log(res);
+    //   res.forEach(record => {
+    //     let _idUser = record.byWhom;
+    //     let _url = `${setting.baseApiUrl}${setting.urlGetUser}/${_idUser}`;
+    //     api.sendRequest(_url).then(res => {
 
-    $getSurvey: function() {
+    //       record.name = res.username;
+    //     });
+    //   });
+    //   return res
+    // },
+
+    $getSurvey: async function() {
       let rawUrl = setting.urlGetSurveyWithProjectId;
       rawUrl = rawUrl.replace(/<:.*>/g, this.projectId);
       let _url = `${setting.baseApiUrl}${rawUrl}`;
-      api.sendRequest(_url).then(res => {
-        this.surveys = res;
-        this.surveys.forEach( record => {
-          this.$modifyData(record)
-        })
-      });
+
+      let res = await api.sendRequest(_url);
+      // let dataAfterModify = await this.$modifyData(res);
+      // console.log('name:',dataAfterModify[0].name)
+      this.surveys = res;
     }
   },
   mounted() {

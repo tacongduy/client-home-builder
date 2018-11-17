@@ -80,7 +80,9 @@ export default {
         clickEvent: function(param) {this.$router.push({name:param})}
     },
     mounted() {
-        this.projectId = this.$route.params.id || ''
+        this.projectId = this.$route.params.id || '';
+        
+        
     },
     components: {OverView},
 }

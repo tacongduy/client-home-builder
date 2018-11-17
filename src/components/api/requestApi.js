@@ -1,6 +1,8 @@
 'use strict';
 
 
+import setting from './setting';
+
 export default {
 
     postData: function (url = ``, data = {}) {
@@ -30,6 +32,7 @@ export default {
             credentials: 'include',
         })
             .then( response => {
+                
                 return response.json()}
             )
     },
@@ -79,4 +82,18 @@ export default {
               return response.json()}
         ); // parses response to JSON
       },
+
+    verifyLogin: async function() {
+      let _token = this.getCookie('access_token');
+      let _userId = this.getCookie('user_id');
+      // if _token or _userId is valid, then return false
+      if(!_token || !_userId) {
+        return false;
+      }
+
+      let _url = `${setting.baseApiUrl}${setting.urlGetUser}/${_userId}`;
+      // send request then check;
+      let requestResult = await this.sendRequest(_url);
+      return requestResult.id ? true : false
+    }
 }

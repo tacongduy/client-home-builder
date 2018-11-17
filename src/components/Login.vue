@@ -49,9 +49,9 @@ export default {
                 .then(data => {
                     let _id = data.id;
                     let _userId = data.userId;
-                    let ckStt= _id || _userId;
+                    let ckStt=  _id && _userId ? true : false;
                     //check request whether is sucess?
-                    if(typeof ckStt === 'undefined'){
+                    if( ckStt === false){
                         this.$notify.error({
                             title: 'Error',
                             message: 'Email or Password is incorrect'
@@ -59,9 +59,9 @@ export default {
                         return;
                     }
                     // request is sucess, so emit login-sucess event
-                    
-                    this.$emit('login-sucess',{id: _id, userId: _userId});
-                    this.dialogVisible = false;
+                    this.$router.replace(this.$route.query.from);
+                    // this.$emit('login-sucess',{id: _id, userId: _userId});
+                    // this.dialogVisible = false;
                 }) // JSON-string from `response.json()` call
                 .catch(error => {
                     console.error(error);
